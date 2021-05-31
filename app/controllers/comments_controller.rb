@@ -2,8 +2,7 @@ class CommentsController < ApplicationController
 
   def create
     @post = Post.find(params[:post_id])
-    # @comment = @post.comments.create(params[:comment]).permit(:name, :comment)
-    @comment = @post.comments.create(params[:comment].permit(:name, :comment))
+    @comment = @post.comments.create(params[:comment].permit(:name, :comment, :user_id))
     redirect_to post_path(@post)
   end
 
@@ -13,6 +12,5 @@ class CommentsController < ApplicationController
     @comment.destroy
     redirect_to post_path(@post)
   end
-
 
 end
