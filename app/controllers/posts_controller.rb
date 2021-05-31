@@ -1,5 +1,7 @@
 class PostsController < ApplicationController
   before_action :find_post, only: [:show, :update, :edit, :destroy]
+  # before_action :authenticate_user!, only: [:new, :create, :edit, :destroy]
+  # before_action :check_auth, except: [:new, :create, :edit, :destroy]
 
   def index
     @posts = Post.all.order("created_at DESC")
@@ -37,6 +39,12 @@ class PostsController < ApplicationController
     @post.destroy
 
     redirect_to posts_path
+  end
+
+  protected
+
+  def check_auth
+    flash.alert = "log in please"
   end
 
   private
