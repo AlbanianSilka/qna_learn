@@ -1,5 +1,9 @@
 <% content_for :page_title, @post.title %>
 
+<!--Убрать по оконачанию тестов-->
+<h1>Емейл юзера- <%= current_user.email %></h1>
+<!-------->
+
 <section class="section">
   <div class="container">
     <h1 class="title">
@@ -14,11 +18,19 @@
 
       <div class="level-right">
         <p class="level-item">
-          <%= link_to "Edit", edit_post_path(@post), class: "button" %>
+          <% if current_user.id == @post[:user_id] %>
+            <%= link_to "Edit", edit_post_path(@post), class: "button" %>
+        <% else %>
+          <% nil %>
+            <% end %>
         </p>
         <p class="level-item">
-          <%= link_to 'Delete', post_path(@post), method: :delete, data: { confirm: "Are you sure that you want to delete this question?" },
-          class: "button is-danger"%>
+          <% if current_user.id == @post[:user_id] %>
+            <%= link_to 'Delete', post_path(@post), method: :delete, data: { confirm: "Are you sure that you want to delete this question?" },
+                        class: "button is-danger"%>
+          <% else %>
+          <% nil %>
+            <% end %>
         </p>
       </div>
 

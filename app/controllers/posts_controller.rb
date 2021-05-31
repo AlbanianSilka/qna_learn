@@ -1,5 +1,6 @@
 class PostsController < ApplicationController
   before_action :find_post, only: [:show, :update, :edit, :destroy]
+  # before_action :set_user, only: [:show, :update, :edit, :destroy]
   # before_action :authenticate_user!, only: [:new, :create, :edit, :destroy]
   # before_action :check_auth, except: [:new, :create, :edit, :destroy]
 
@@ -13,7 +14,7 @@ class PostsController < ApplicationController
 
   def create
     @post = Post.new(post_params)
-
+    @post[:user_id] = current_user.id
     if @post.save
       redirect_to @post
     else
@@ -41,16 +42,10 @@ class PostsController < ApplicationController
     redirect_to posts_path
   end
 
-  protected
-
-  def check_auth
-    flash.alert = "log in please"
-  end
-
   private
 
   def post_params
-    params.require(:post).permit(:title, :content)
+    params.require(:post).permit(:title, :content, :user_id).merge(user_id: current_user.id)
   end
 
   def find_post
