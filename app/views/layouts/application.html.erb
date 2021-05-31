@@ -11,6 +11,7 @@
   </head>
 
   <body>
+  <%= render 'layouts/alerts' %>
   <section class="hero is-primary is-medium">
     <div class="hero-head">
       <nav class="navbar">
@@ -25,7 +26,21 @@
           </div>
           <div id="navbarMenuHeroA" class="navbar-menu">
             <div class="navbar-end">
-              <%= link_to "Create new post", new_post_path, class: "navbar-item" %>
+              <% if current_user %>
+                <%= link_to 'Sign out', destroy_user_session_path, method: :delete %>
+              <% else %>
+                <%= link_to 'Sign up', new_user_registration_path %>
+                <%= link_to 'Sign in', new_user_session_path %>
+              <% end %>
+            </div>
+          </div>
+          <div id="navbarMenuHeroA" class="navbar-menu">
+            <div class="navbar-end">
+              <% if user_signed_in? %>
+                <%= link_to "Create new post", new_post_path, class: "navbar-item"  %>
+            <% else %>
+                <input value="Create new post" onclick="alert('You must be logged in to create a new post!')" type="button">
+            <% end %>
             </div>
           </div>
         </div>
