@@ -18,6 +18,7 @@ ActiveRecord::Schema.define(version: 2021_05_31_143944) do
   create_table "comments", force: :cascade do |t|
     t.string "name"
     t.text "comment"
+    t.boolean "best"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "post_id"
