@@ -36,7 +36,30 @@
     <div class="content">
       <%= @post.content %>
     </div>
+
+    <div class="attachment-gallery">
+    </div>
+    <div class="file">
+      <% if @post.file.attached? %>
+        <%= link_to 'Download attached file', @post.file.first %>
+        <% if current_user.id == @post[:user_id] %>
+        <div class="delete-button">
+          <% @post.file.each do |file| %>
+            <%= link_to 'Remove', post_destroy_attachment_url(file.id),
+                        method: :delete,
+                        data: { confirm: 'Are you sure?' } %>
+            <% end %>
+        <% else %>
+      <% nil %>
+          <% end %>
+        </div>
+      <% else %>
+        <% nil %>
+      <% end %>
+    </div>
+
   </div>
+
 </section>
 
 <section class="section comments">
