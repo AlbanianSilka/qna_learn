@@ -1,5 +1,6 @@
 class PostsController < ApplicationController
-  before_action :find_post, only: [:show, :update, :edit, :destroy]
+  before_action :find_post, only: [:show, :update, :edit, :destroy, :upvote, :downvote]
+  before_action :authenticate_user!, only: [:update, :edit, :destroy]
 
   def index
     @posts = Post.all.order("created_at DESC")
@@ -37,6 +38,24 @@ class PostsController < ApplicationController
     @post.destroy
 
     redirect_to posts_path
+  end
+
+  def upvote
+    if @post.voted_up_by? current_user
+      @post.unvote_by(current_user)
+    else
+      @post.upvote_by(current_user)
+    end
+    redirect_back fallback_location: root_path
+  end
+
+  def downvote
+    if @post.voted_down_by? current_user
+      @post.unvote_by(current_user)
+    else
+      @post.downvote_by(current_user)
+    end
+    redirect_back fallback_location: root_path
   end
 
   def destroy_attachment
