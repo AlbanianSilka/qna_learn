@@ -1,8 +1,5 @@
 class PostsController < ApplicationController
   before_action :find_post, only: [:show, :update, :edit, :destroy]
-  # before_action :set_user, only: [:show, :update, :edit, :destroy]
-  # before_action :authenticate_user!, only: [:new, :create, :edit, :destroy]
-  # before_action :check_auth, except: [:new, :create, :edit, :destroy]
 
   def index
     @posts = Post.all.order("created_at DESC")
@@ -42,10 +39,16 @@ class PostsController < ApplicationController
     redirect_to posts_path
   end
 
+  def destroy_attachment
+    @file = ActiveStorage::Attachment.find_by(params[:id])
+    @file.purge
+    redirect_back(fallback_location: posts_path)
+  end
+
   private
 
   def post_params
-    params.require(:post).permit(:title, :content, :user_id).merge(user_id: current_user.id)
+    params.require(:post).permit(:title, :content, :user_id, :file).merge(user_id: current_user.id)
   end
 
   def find_post
