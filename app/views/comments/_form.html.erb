@@ -11,5 +11,9 @@
       <%= f.input :comment, input_html: { class: 'textarea' }, wrapper: false, label_html: { class: 'label' } %>
     </div>
   </div>
+  <div class="field">
+    <%= f.label :file %>
+    <%= f.file_field :file %>
+  </div>
   <%= f.button :submit, class: "button is-primary"%>
 <% end %>

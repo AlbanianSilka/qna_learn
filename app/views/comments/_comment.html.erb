@@ -8,6 +8,17 @@
           </strong>
           <%= comment.comment %>
         </p>
+        <div class="file">
+          <% if comment.file.attached? %>
+            <%= link_to 'Download attached file', comment.file %>
+<!--            Пофиксить-->
+<!--            <div class="remove-file">-->
+              <%#= link_to 'Remove', post_comment_destroy_attachment_path(comment.post, comment.file.first), method: :delete, data: { confirm: 'Are you sure?' } %>
+<!--            </div>-->
+          <% else %>
+            <% nil %>
+          <% end %>
+        </div>
       </div>
     </div>
     <% if comment.user_id == current_user.id %>
