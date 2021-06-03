@@ -40,6 +40,15 @@
     <div class="attachment-gallery">
     </div>
     <div class="file">
+      <p>
+        <% if current_user.id == @post[:user_id] %>
+          <% nil %>
+        <% else %>
+          <%= @post.get_upvotes.size-@post.get_downvotes.size %>
+          <%= link_to "Like", like_post_path(@post.id), method: :put, class: "button"%>
+          <%= link_to "Dislike", dislike_post_path(@post), method: :put, class: "button"%>
+        <% end %>
+      </p>
       <% if @post.file.attached? %>
         <%= link_to 'Download attached file', @post.file.first %>
         <% if current_user.id == @post[:user_id] %>

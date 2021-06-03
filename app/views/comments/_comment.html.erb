@@ -7,6 +7,15 @@
             <%= comment.name %>
           </strong>
           <%= comment.comment %>
+            <br>
+            <br>
+          <% if comment.user_id == current_user.id %>
+            <% nil %>
+          <% else %>
+          <%= comment.get_upvotes.size-comment.get_downvotes.size %>
+          <%= link_to "Like", like_post_comment_path(comment.post, comment), method: :put, class: "button", id: "like1"%>
+          <%= link_to "Dislike", dislike_post_comment_path(comment.post, comment), method: :put, class: "button"%>
+          <% end %>
         </p>
         <div class="file">
           <% if comment.file.attached? %>
