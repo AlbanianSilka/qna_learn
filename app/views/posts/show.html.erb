@@ -1,5 +1,7 @@
 <% content_for :page_title, @post.title %>
+<div id="post-id" data-post-id="<%= @post_id %>">
 
+</div>
 <section class="section">
   <div class="container">
     <h1 class="title">
@@ -71,11 +73,20 @@
 
 </section>
 
-<section class="section comments">
+<section class="section comments" id="post_comments">
   <div class="container">
     <h2 class="subtitle is-5"><strong>
       <%= @post.comments.count %>
     </strong> Comments </h2>
+    <div class="content">
+<!--      Пофиксить ActionCable комментов (сделать всё покрасивше)-->
+      <div id="comment_name">
+      </div>
+      <div id="comment_content">
+      </div>
+      <div id="comment_answers">
+      </div>
+    </div>
     <%= render @post.comments %>
     <div class="comment-form">
       <hr />

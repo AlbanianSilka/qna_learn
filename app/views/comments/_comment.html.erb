@@ -1,13 +1,19 @@
+<div id="post-id" data-post-id="<%= @post_id %>"> </div>
 <div class="box">
   <article class="media">
     <div class="media-content">
       <div class="content">
         <p>
+          <div class="content">
           <strong>
             <%= comment.name %>
           </strong>
-          <%= comment.comment %>
-            <br>
+          </div>
+        <% @comment = comment %>
+          <%= @comment.comment %>
+        <%= render @comment.answers %>
+        <%= render 'answers/form' %>
+          <br>
             <br>
           <% if comment.user_id == current_user.id %>
             <% nil %>

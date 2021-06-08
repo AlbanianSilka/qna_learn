@@ -1,4 +1,4 @@
-<%= simple_form_for([@post, @post.comments.build]) do |f| %>
+<%= simple_form_for([@post, @post.comments.build], remote: true) do |f| %>
   <div class="field">
     <div class="control">
       <h1 hidden><%= (f.text_field :best, value: false ).freeze %></h1>
