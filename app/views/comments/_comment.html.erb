@@ -11,6 +11,9 @@
           </div>
         <% @comment = comment %>
           <%= @comment.comment %>
+        <br>
+        <h>Comments:</h>
+        <br>
         <%= render @comment.answers %>
         <%= render 'answers/form' %>
           <br>
