@@ -3,22 +3,20 @@ class PostsController < ApplicationController
   before_action :authenticate_user!, only: [:update, :edit, :destroy]
   after_action :publish_post, only: [:create]
 
+  respond_to :html, :json
+
   def index
-    @posts = Post.all.order("created_at DESC")
+    respond_with(@posts = Post.all.order("created_at DESC"))
   end
 
   def new
     @post = Post.new
+    respond_with @post
   end
 
   def create
-    @post = Post.new(post_params)
+    respond_with(@post = Post.create(post_params))
     @post[:user_id] = current_user.id
-    if @post.save
-      redirect_to @post
-    else
-      render new
-    end
   end
 
   def publish_post
@@ -27,23 +25,19 @@ class PostsController < ApplicationController
 
   def show
     @post_id = @post[:id]
+    respond_with @post
   end
 
   def update
-    if @post.update(post_params)
-      redirect_to @post
-    else
-      render 'edit'
-    end
+    @post.update(post_params)
+    respond_with @post
   end
 
   def edit
   end
 
   def destroy
-    @post.destroy
-
-    redirect_to posts_path
+    respond_with(@post.destroy)
   end
 
   def upvote
@@ -71,6 +65,10 @@ class PostsController < ApplicationController
   end
 
   private
+
+  def interpolation_options
+    { resource_name: 'New awesome post', time: @post.created_at, user: current_user.email}
+  end
 
   def post_params
     params.require(:post).permit(:title, :content, :user_id, :file).merge(user_id: current_user.id)
