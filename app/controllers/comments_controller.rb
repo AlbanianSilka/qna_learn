@@ -1,11 +1,16 @@
 class CommentsController < ApplicationController
   before_action :find_comment, only: [:destroy, :downvote, :upvote]
   before_action :authenticate_user!, only: [:destroy, :downvote, :upvote]
+  after_action :publish_comment, only: [:create]
 
   def create
     @post = Post.find(params[:post_id])
     @comment = @post.comments.create(params[:comment].permit(:name, :comment, :user_id, :best, :file))
     redirect_to post_path(@post)
+  end
+
+  def publish_comment
+    ActionCable.server.broadcast("post_channel_#{@comment.post_id}", {title: @comment.name, content: @comment.comment})
   end
 
   def destroy
@@ -41,6 +46,7 @@ class CommentsController < ApplicationController
 
   def find_comment
     @post = Post.find(params[:post_id])
+    @post_id = @post[:post_id]
     @comment = @post.comments.find(params[:id])
   end
 

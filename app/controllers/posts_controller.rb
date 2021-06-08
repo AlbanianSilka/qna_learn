@@ -1,6 +1,7 @@
 class PostsController < ApplicationController
   before_action :find_post, only: [:show, :update, :edit, :destroy, :upvote, :downvote]
   before_action :authenticate_user!, only: [:update, :edit, :destroy]
+  after_action :publish_post, only: [:create]
 
   def index
     @posts = Post.all.order("created_at DESC")
@@ -20,7 +21,12 @@ class PostsController < ApplicationController
     end
   end
 
+  def publish_post
+    ActionCable.server.broadcast "posts_channel", {title: @post.title, content: @post.content, id: @post.id}
+  end
+
   def show
+    @post_id = @post[:id]
   end
 
   def update
