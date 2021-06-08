@@ -3,12 +3,23 @@
 // a relevant structure within app/javascript and only use these pack files to reference
 // that code so it'll be compiled.
 
+
 import Rails from "@rails/ujs"
 import Turbolinks from "turbolinks"
 import * as ActiveStorage from "@rails/activestorage"
 import "channels"
-import('@rails/actioncable')
+// import('@rails/actioncable')
+import * as ActionCable from "@rails/actioncable"
+require('jquery')
 
 Rails.start()
 Turbolinks.start()
 ActiveStorage.start()
+
+$(document).on('turbolinks:load', function (){
+    // console.log('we are ready!')
+})
+
+
+var App = App || {};
+App.cable = ActionCable.createConsumer();
