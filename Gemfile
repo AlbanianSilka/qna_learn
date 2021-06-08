@@ -20,8 +20,7 @@ gem 'jbuilder', '~> 2.7'
 gem 'jquery-rails', '~> 4.4'
 gem 'acts_as_votable', '~> 0.13.1'
 gem 'redis', '~> 4.2', '>= 4.2.5'
-# Use Redis adapter to run Action Cable in production
-# gem 'redis', '~> 4.0'
+gem 'responders', '~> 3.0', '>= 3.0.1'
 # Use Active Model has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
