@@ -21,6 +21,12 @@ gem 'jquery-rails', '~> 4.4'
 gem 'acts_as_votable', '~> 0.13.1'
 gem 'redis', '~> 4.2', '>= 4.2.5'
 gem 'responders', '~> 3.0', '>= 3.0.1'
+gem 'oauth'
+gem 'omniauth'
+gem 'omniauth-github'
+gem 'omniauth-twitter'
+gem 'omniauth-rails_csrf_protection'
+gem 'activerecord-session_store'
 # Use Active Model has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
