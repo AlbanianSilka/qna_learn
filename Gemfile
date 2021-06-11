@@ -27,6 +27,7 @@ gem 'omniauth-github'
 gem 'omniauth-twitter'
 gem 'omniauth-rails_csrf_protection'
 gem 'activerecord-session_store'
+gem 'cancancan', '~> 3.2', '>= 3.2.2'
 # Use Active Model has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
