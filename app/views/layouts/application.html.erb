@@ -37,10 +37,10 @@
           </div>
           <div id="navbarMenuHeroA" class="navbar-menu">
             <div class="navbar-end">
-              <% if user_signed_in? %>
+              <% if can?(:create, Post) %>
                 <%= link_to "Create new post", new_post_path, class: "navbar-item"  %>
-            <% else %>
-                <input value="Create new post" onclick="alert('You must be logged in to create a new post!')" type="button">
+            <%# else %>
+<!--                <input value="Create new post" onclick="alert('You must be logged in to create a new post!')" type="button">-->
             <% end %>
             </div>
           </div>
