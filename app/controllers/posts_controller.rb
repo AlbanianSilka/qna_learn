@@ -5,6 +5,8 @@ class PostsController < ApplicationController
 
   respond_to :html, :json
 
+  authorize_resource
+
   def index
     respond_with(@posts = Post.all.order("created_at DESC"))
   end
