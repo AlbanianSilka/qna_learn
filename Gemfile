@@ -29,6 +29,9 @@ gem 'omniauth-rails_csrf_protection'
 gem 'activerecord-session_store'
 gem 'cancancan', '~> 3.2', '>= 3.2.2'
 gem 'doorkeeper', '~> 5.5', '>= 5.5.2'
+gem 'active_model_serializers', '~> 0.10.12'
+gem 'oj', '~> 3.11', '>= 3.11.5'
+gem 'oj_mimic_json', '~> 1.0', '>= 1.0.1'
 # Use Active Model has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
