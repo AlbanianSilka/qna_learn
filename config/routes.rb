@@ -1,7 +1,6 @@
 Rails.application.routes.draw do
-  # get '/posts/:id' => 'posts#show'
+  use_doorkeeper
   devise_for :users, controllers: { omniauth_callbacks: 'omniauth'}
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 
   resources :posts do
     member do
@@ -18,6 +17,14 @@ Rails.application.routes.draw do
     end
 
     delete :destroy_attachment
+  end
+
+  namespace :api do
+    namespace :v1 do
+      resource :profiles do
+        get :me, :on => :collection
+      end
+    end
   end
 
   root "posts#index"
