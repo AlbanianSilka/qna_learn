@@ -16,14 +16,7 @@ Doorkeeper.configure do
   # every time somebody will try to access the admin web interface.
   #
   admin_authenticator do
-    # Put your admin authentication logic here.
-    # Example implementation:
-
-    if current_user
-      head :forbidden unless current_user.admin?
-    else
-      redirect_to sign_in_url
-    end
+    current_user.try(:admin?) || redirect_to(new_user_session_path)
   end
 
   # You can use your own model classes if you need to extend (or even override) default
