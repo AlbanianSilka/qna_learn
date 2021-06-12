@@ -5,7 +5,11 @@ class ApplicationController < ActionController::Base
   respond_to :html
 
   rescue_from CanCan::AccessDenied do |exception|
-    redirect_to root_url, alert: exception.message
+    respond_to do |format|
+      format.json { render nothing: true, status: :forbidden }
+      format.html { redirect_to root_url, alert: exception.message }
+      format.js   { render nothing: true, status: :forbidden }
+    end
   end
 
 end
