@@ -100,6 +100,8 @@ GEM
       railties (>= 4.1.0)
       responders
       warden (~> 1.2.3)
+    doorkeeper (5.5.2)
+      railties (>= 5)
     em-websocket (0.5.2)
       eventmachine (>= 0.12.9)
       http_parser.rb (~> 0.6.0)
@@ -322,6 +324,7 @@ DEPENDENCIES
   cancancan (~> 3.2, >= 3.2.2)
   capybara (>= 3.26)
   devise (~> 4.8)
+  doorkeeper (~> 5.5, >= 5.5.2)
   guard (~> 2.17)
   guard-livereload (~> 2.5, >= 2.5.2)
   jbuilder (~> 2.7)
