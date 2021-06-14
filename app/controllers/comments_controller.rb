@@ -6,7 +6,10 @@ class CommentsController < ApplicationController
   def create
     @post = Post.find(params[:post_id])
     @comment = @post.comments.create(params[:comment].permit(:name, :comment, :user_id, :best, :file))
-    redirect_to post_path(@post)
+    respond_to do |format|
+      format.html { redirect_to post_path(@post) }
+      format.js
+    end
   end
 
   def publish_comment
@@ -15,6 +18,14 @@ class CommentsController < ApplicationController
 
   def destroy
     @comment.destroy
+    respond_to do |format|
+      format.html { redirect_to post_path(@post) }
+      format.js
+    end
+  end
+
+  def choose_best
+    # TODO mark comment as the best
     redirect_to post_path(@post)
   end
 
