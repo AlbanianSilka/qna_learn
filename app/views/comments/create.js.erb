@@ -1,0 +1,6 @@
+function eraseText() {
+    document.getElementById("comment_comment").value = "";
+    document.getElementById("comment_name").value = "";
+}
+$('#comment_content').append('<%= j render(@comment) %>');
+eraseText()
