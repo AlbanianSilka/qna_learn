@@ -15,7 +15,7 @@ document.addEventListener('turbolinks:load', () => {
     },
 
     received(data) {
-      $('#comment_name').append('<div class="comment"> <strong>' + data.title + '</strong></div>')
+      $('#named_comment').append('<div class="comment"> <strong>' + data.title + '</strong></div>')
       $('#comment_content').append('<div class="comment">' + data.content + '</div>')
       $('#comment_answers').append('<div class=comment">' + data.answer + '</div>')
       console.log(data)
