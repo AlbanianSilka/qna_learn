@@ -8,7 +8,9 @@ class PostsController < ApplicationController
   authorize_resource
 
   def index
-    respond_with(@posts = Post.all.order("created_at DESC"))
+    @q = Post.ransack(params[:q])
+    @posts = @q.result
+    # respond_with(@posts = Post.all.order("created_at DESC"))
   end
 
   def new
