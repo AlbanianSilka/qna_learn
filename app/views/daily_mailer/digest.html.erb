@@ -1,0 +1,14 @@
+<h1>Daily digest</h1>
+
+<p>
+  Hi <%= @user.email %>, here you can find new posts from my website!
+</p>
+<tbody>
+<% @posts.each do |p| %>
+  <tr>
+    <td><%= p.title %></td>
+    <td><%= p.content %></td>
+    <td><%= link_to 'Here', post_url(p) %></td>
+  </tr>
+<% end %>
+</tbody>
