@@ -22,6 +22,7 @@ class Ability
 
   def user_abilities
     guest_abilities
+    can :subscribe, [Post]
     can :create, [Post, Comment, Answer]
     can :update, [Post, Comment], user: user
     can :destroy, [Post, Comment], { user: user }
