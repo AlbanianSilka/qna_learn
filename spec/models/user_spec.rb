@@ -1,11 +1,11 @@
-require 'spec_helper'
+require 'rails_helper'
 
 RSpec.describe User, type: :model do
-    it 'ensures email presence' do
-      expect(User.new(email: 'example@test.com')).to_not be_valid
-    end
-  end
+  it { should validate_presence_of :email }
+  it { should have_many :posts }
+  it { should have_many :comments }
 
-  context 'scope test' do
-  end
+
+end
+
 
