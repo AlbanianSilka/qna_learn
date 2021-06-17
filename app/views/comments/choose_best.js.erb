@@ -1,0 +1,11 @@
+<%# if @comment.best? %>
+<%# end %>
+<% if @comment.best? %>
+$('.comments').html('<%= j render 'posts/form', post: @post.comment %>');
+$('.comment-form').on('click', function (e) {
+    e.preventDefault();
+    $(this).hide();
+    var comment_id = $(this).parents('.comment').data('commentID');
+    $('#best-comment-link-' + comment_id).hide();
+})
+<% end %>

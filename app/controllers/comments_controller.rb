@@ -1,10 +1,10 @@
 class CommentsController < ApplicationController
-  before_action :find_comment, only: [:destroy, :downvote, :upvote]
+  before_action :find_comment, only: [:destroy, :downvote, :upvote, :choose_best]
   before_action :authenticate_user!, only: [:destroy, :downvote, :upvote]
   after_action :publish_comment, only: [:create]
 
   def create
-    @post = Post.find(params[:post_id])
+    @post = Post.find(params['post_id'])
     @comment = @post.comments.create(params[:comment].permit(:name, :comment, :user_id, :best, :file))
     respond_to do |format|
       format.html { redirect_to post_path(@post) }
@@ -25,7 +25,7 @@ class CommentsController < ApplicationController
   end
 
   def choose_best
-    # TODO mark comment as the best
+    @comment.choose_best!
     redirect_to post_path(@post)
   end
 
@@ -57,8 +57,6 @@ class CommentsController < ApplicationController
 
   def find_comment
     @post = Post.find(params[:post_id])
-    @post_id = @post[:post_id]
     @comment = @post.comments.find(params[:id])
   end
-
 end
