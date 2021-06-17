@@ -12,6 +12,13 @@
           </div>
         <% @comment = comment %>
           <%= @comment.comment %>
+        <% if @comment.best? %>
+          <h1>лучший</h1>
+          <% else %>
+          <h1>не лучший</h1>
+          <% end %>
+        <%=link_to 'Best', choose_best_post_comment_path(comment.post, comment), method: :patch, remote: true,
+                   class: 'best-answer-btn btn btn-success', id: "best-comment-link-#{comment.id}"%>
         <br>
         <h>Comments:</h>
         <br>
@@ -19,9 +26,19 @@
         <%= render 'answers/form' %>
           <br>
             <br>
-          <%= comment.get_upvotes.size-comment.get_downvotes.size %>
-          <%= link_to "Like", like_post_comment_path(comment.post, comment), method: :put, class: "button", id: "like1"%>
-          <%= link_to "Dislike", dislike_post_comment_path(comment.post, comment), method: :put, class: "button"%>
+        <div id="voting">
+            <%= link_to like_post_comment_path(comment.post, comment), method: :put do %>
+          <%= image_tag "1200px-Green_Arrow_Up.svg.png" %>
+          <% end %>
+          <div class="vot">
+            <%= comment.get_upvotes.size-comment.get_downvotes.size %>
+          </div>
+          <div class="downbutton">
+            <%= link_to dislike_post_comment_path(comment.post, comment), method: :put do %>
+              <%= image_tag "1200px-Red_Arrow_Down.svg.png" %>
+              <% end %>
+          </div>
+        </div>
         </p>
         <div class="file">
           <% if comment.file.attached? %>
