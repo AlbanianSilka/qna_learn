@@ -1,4 +1,4 @@
-class Api::V1::AnswersController < Api::V1::BaseController
+class Api::V1::CommentsController < Api::V1::BaseController
   before_action :authenticate_user!, only: :create
   before_action :find_post, only: :create
 
