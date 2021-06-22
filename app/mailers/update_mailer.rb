@@ -1,4 +1,4 @@
-class UpdatesMailer < ApplicationMailer
+class UpdateMailer < ApplicationMailer
   def notify(user, post)
     @post = post
     @user = user
