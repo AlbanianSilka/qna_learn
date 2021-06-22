@@ -33,6 +33,7 @@ gem 'active_model_serializers', '~> 0.10.12'
 gem 'oj', '~> 3.11', '>= 3.11.5'
 gem 'oj_mimic_json', '~> 1.0', '>= 1.0.1'
 gem 'ransack', '~> 2.4', '>= 2.4.2'
+gem 'platform-api'
 # Use Active Model has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
