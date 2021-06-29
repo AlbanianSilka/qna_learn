@@ -70,7 +70,7 @@ class PostsController < ApplicationController
 
   private
 
-  def interpolation_options
+  def flash_interpolation_options
     { resource_name: 'New awesome post', time: @post.created_at, user: current_user.email}
   end
 
