@@ -50,6 +50,7 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'factory_bot_rails'
   gem 'rexml'
+  gem 'rails-controller-testing', '~> 1.0', '>= 1.0.5'
 end
 
 # Make errors look better
@@ -80,11 +81,12 @@ end
 
 group :test do
   # Adds support for Capybara system testing and selenium driver
-  gem 'capybara', '>= 3.26'
   gem 'selenium-webdriver'
   # Easy installation and use of web drivers to run system tests with browsers
   gem 'webdrivers'
   gem 'shoulda-matchers', '~> 4.5', '>= 4.5.1'
+  gem 'capybara', '~> 3.35', '>= 3.35.3'
+  gem 'launchy', '~> 2.5'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
