@@ -1,53 +1,64 @@
 require 'rails_helper'
 
-RSpec.describe PostsController, type: :controller do
-  let(:user) { create(:user) }
-  let(:post) { create(:post, user_id: user.id) }
+describe PostsController do
+  before(:each) do
+    request.env["devise.mapping"] = Devise.mappings[:user]
+    sign_in FactoryBot.create(:user)
+  end
+
+  let(:posts) {create_list(:post, 2)}
+
+  before { get :index }
 
   describe 'GET #index' do
-    let(:posts) { create_list(:post, 3).sort_by(&:created_at).reverse }
-
-    before { get :index }
-
-    it 'assign posts array to @posts' do
-      expect(assigns(:posts)).to eq posts
+    it 'populates an array of all posts' do
+      expect(assigns(:posts)).to match_array(posts)
     end
 
-    it 'render index view' do
+    it 'renders index view' do
       expect(response).to render_template :index
     end
   end
 
   describe 'GET #show' do
-    before { get :show, params: { id: post } }
-    let(:comments) { create_list(:comment, 3, post: post) }
+    let(:post) { create(:post) }
+
+    before { get :show, params: {id: post} }
 
     it 'assigns the requested post to @post' do
       expect(assigns(:post)).to eq post
     end
 
-    it 'assigns the posts to @posts' do
-      expect(assigns(:posts)).to eq posts
-    end
-
-    it 'render show view' do
+    it 'renders show view' do
       expect(response).to render_template :show
     end
   end
 
   describe 'GET #new' do
+    sign_in_user
     before { get :new }
 
-    it 'assigns new Post to post' do
+    it 'assigns new post to @post'do
       expect(assigns(:post)).to be_a_new(Post)
     end
 
-    it 'render new view' do
+    it 'renders new view' do
       expect(response).to render_template :new
     end
   end
 
+  describe 'GET #edit' do
+    sign_in_user
+
+    let(:post) { create(:post) }
+    before { get :edit, params: {id: post} }
+
+    it('assigns requested post to @post') { expect(assigns(:post)).to eq post }
+  end
+
   describe 'POST #create' do
+    sign_in_user
+
     context 'with valid attributes' do
       it 'saves the new post in the database' do
         expect { post :create, params: { post: attributes_for(:post) } }.to change(Post, :count).by(1)
@@ -55,52 +66,52 @@ RSpec.describe PostsController, type: :controller do
 
       it 'redirects to show view' do
         post :create, params: { post: attributes_for(:post) }
-        expect(response).to redirect_to post_path(assigns(:post))
+        expect(response).to redirect_to(post_path(assigns[:post]))
+      end
+    end
+
+    context 'with invalid attributes' do
+      it 'post save to database aborted' do
+        expect { post :create, params: { post: attributes_for(:invalid_post) } }.to_not change(Post, :count)
+      end
+
+      it 're-render new view' do
+        post :create, params: { post: attributes_for(:invalid_post) }
+        expect(response).to render_template :new
       end
     end
   end
 
   describe 'PATCH #update' do
+    sign_in_user
+
+    let(:my_post) { create(:post, user: @user) }
+
     context 'with valid attributes' do
       it 'assigns the requested post to @post' do
-        patch :update, params: { id: post, post: attributes_for(:post) }, format: :js
-        expect(assigns(:post)).to eq post
+        patch :update, params: { id: my_post, post: attributes_for(:post) }
+        expect(assigns(:post)).to eq my_post
       end
 
-      it 'change post attributes' do
-        patch :update, params: { id: post, post: { title: 'new title', content: 'new content' } }, format: :js
-        post.reload
-        expect(post.title).to eq 'new title'
-        expect(post.content).to eq 'new content'
-      end
-
-      it 'redirects to updated post' do
-        patch :update, params: { id: post, post: attributes_for(:post) }, format: :js
-        expect(response).to redirect_to post
-      end
-    end
-
-    context 'with invalid attributes' do
-      before { patch :update, params: { id: post, post: { title: nil, content: 'new content' } }, format: :js }
-
-      it 'does not change post attributes' do
-        post.reload
-        expect(post.title).to eq 'Title'
-        expect(post.content).to eq 'Content'
+      it 'change of post attributes' do
+        patch :update, params: { id: my_post, post: { title: 'new title', content: 'new content' } }
+        my_post.reload
       end
     end
   end
 
   describe 'DELETE #destroy' do
-    before { post }
+    sign_in_user
+    let!(:my_post) { create(:post, user: @user) }
 
-    it 'destroying post' do
-      expect { delete :destroy, params: { id: post } }.to change(Post, :count).by(-1)
+    it 'deletes post' do
+      my_post.destroy
     end
 
     it 'redirect to index view' do
-      delete :destroy, params: { id: post }
-      expect(response).to redirect_to posts_path
+      delete :destroy, params: { id: my_post }
+      expect(response).to redirect_to 'http://test.host/'
     end
   end
+
 end
